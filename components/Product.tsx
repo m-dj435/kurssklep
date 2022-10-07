@@ -1,22 +1,23 @@
 import Rating from "./Rating";
 
-interface Product {
-  data: {
-    description: string;
-    thumbnailUrl: string;
-    thumbnailAlt: string;
-    rating: number;
-  };
+interface ProductProps {
+  description: string;
+  thumbnailUrl: string;
+  thumbnailAlt: string;
+  rating: number;
 }
 
-const Product = ({ data }: Product) => {
-  return (
-    <>
-      <img src={data.thumbnailUrl} alt={data.thumbnailAlt} />
-      <p>{data.description}</p>
-      <Rating rating={data.rating} />
-    </>
-  );
-};
+const Product = ({
+  description,
+  thumbnailAlt,
+  thumbnailUrl,
+  rating,
+}: ProductProps) => (
+  <>
+    <img src={thumbnailUrl} alt={thumbnailAlt} />
+    <p>{description}</p>
+    <Rating rating={rating} />
+  </>
+);
 
 export default Product;

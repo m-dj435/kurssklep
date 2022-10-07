@@ -17,11 +17,12 @@ const DATA = {
 };
 
 const Home = () => {
+  console.log({ ...DATA }, DATA);
   return (
     <div className="flex flex-col min-h-screen bg-teal-100">
       <Header />
       <Main>
-        <Product data={DATA} />
+        <Product {...DATA} />
       </Main>
       <Footer />
     </div>
