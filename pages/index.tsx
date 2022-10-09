@@ -19,7 +19,7 @@ const DATA = {
 const Home = () => {
   console.log({ ...DATA }, DATA);
   return (
-    <div className="flex flex-col min-h-screen bg-teal-100">
+    <div className="flex flex-col min-h-screen bg-gradient-to-r from-indigo-500 via-purple-200 to-pink-200">
       <Header />
       <Main>
         <Product {...DATA} />

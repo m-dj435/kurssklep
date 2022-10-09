@@ -4,7 +4,7 @@ interface MainProps {
 
 const Main = ({ children }: MainProps) => {
   return (
-    <main className="max-w-md grid mx-auto p-6 gap-6 sm:grid-cols-2 bg-teal-100">
+    <main className="max-w-md grid mx-auto p-6 gap-6 sm:grid-cols-2">
       {children}
     </main>
   );

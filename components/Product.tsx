@@ -14,8 +14,12 @@ const Product = ({
   rating,
 }: ProductProps) => (
   <>
-    <img src={thumbnailUrl} alt={thumbnailAlt} />
-    <p>{description}</p>
+    <img
+      src={thumbnailUrl}
+      alt={thumbnailAlt}
+      className="hover:border-4 border-dotted hover:translate-y-2"
+    />
+    <p className="">{description}</p>
     <Rating rating={rating} />
   </>
 );
