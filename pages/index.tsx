@@ -1,9 +1,10 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Main from "../components/Main";
-import Product from "../components/Product";
+import ProductDetails from "../components/Product";
 
 const DATA = {
+  title: ``,
   description: `Aliquam eu consectetur eros. Pellentesque rutrum mauris a nibh
           dapibus, congue congue magna laoreet. Mauris at suscipit nisl, eget
           placerat felis. Donec eu tempus risus. Aliquam fringilla condimentum
@@ -17,12 +18,12 @@ const DATA = {
 };
 
 const Home = () => {
-  console.log({ ...DATA }, DATA);
+  // console.log({ ...DATA }, DATA);
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-indigo-500 via-purple-200 to-pink-200">
       <Header />
       <Main>
-        <Product {...DATA} />
+        <ProductDetails data={DATA} />
       </Main>
       <Footer />
     </div>
