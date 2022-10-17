@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import Rating from "./Rating";
 
@@ -17,11 +18,17 @@ interface ProductProps {
 export const ProductDetails = ({ data }: ProductProps) => {
   return (
     <>
-      <img
-        src={data.thumbnailUrl}
-        alt={data.thumbnailAlt}
-        className="hover:border-4 border-dotted hover:translate-y-2"
-      />
+      <div className="bg-white p-6">
+        <Image
+          src={data.thumbnailUrl}
+          alt={data.thumbnailAlt}
+          className="hover:border-4 border-dotted hover:translate-y-2"
+          width={16}
+          height={9}
+          layout="responsive"
+          objectFit="contain"
+        />
+      </div>
       <h2 className="text-center text-blue-800 font-bold text-2xl">
         {data.title}
       </h2>
@@ -33,7 +40,7 @@ export const ProductDetails = ({ data }: ProductProps) => {
 
 type ProductListItem = Pick<
   ProductDetails,
-  "title" | "thumbnailUrl" | "thumbnailAlt" | "id"
+  "id" | "title" | "thumbnailUrl" | "thumbnailAlt"
 >;
 
 interface ProductListItemProps {
@@ -43,11 +50,16 @@ interface ProductListItemProps {
 const ProductListItem = ({ data }: ProductListItemProps) => {
   return (
     <>
-      <img
-        src={data.thumbnailUrl}
-        alt={data.thumbnailAlt}
-        className="hover:border-4 border-dotted hover:translate-y-2"
-      />
+      <div className="bg-white p-6">
+        <Image
+          src={data.thumbnailUrl}
+          alt={data.thumbnailAlt}
+          width={16}
+          height={9}
+          layout="responsive"
+          objectFit="contain"
+        />
+      </div>
       <Link href={`/products/${data.id}`}>
         <a>
           <h2 className="text-center text-blue-800 font-bold text-2xl">
