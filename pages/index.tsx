@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Main from "../components/Main";
-import ProductDetails from "../components/Product";
+import { ProductDetails } from "../components/Product";
 
 const DATA = {
   title: ``,
@@ -15,6 +15,7 @@ const DATA = {
   thumbnailUrl: `https://picsum.photos/id/1060/536/354`,
   thumbnailAlt: `Barista z kawą`,
   rating: 4.5,
+  id: 1,
 };
 
 const Home = () => {

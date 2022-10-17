@@ -1,5 +1,5 @@
 import Rating from "./Rating";
-
+import Image from "next/image";
 interface ProductDetailsHomeFirst {
   id: number;
   title: string;
@@ -29,7 +29,13 @@ const ProductDetailsHomeFirst = ({ data }: ProductProps) => {
       <p className="p-4">{data.description}</p>
       <p>{data.category}</p>
       <Rating rating={data.rating.rate} />
-      <img src={data.image} />
+      <Image
+        src={data.image}
+        layout="responsive"
+        width={16}
+        height={9}
+        alt=""
+      />
       <p>{data.longDescription}</p>
     </>
   );

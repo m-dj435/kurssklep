@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Rating from "./Rating";
+import Image from "next/image";
 
 interface ProductDetails {
   id: number;
@@ -17,10 +18,12 @@ interface ProductProps {
 export const ProductDetails = ({ data }: ProductProps) => {
   return (
     <>
-      <img
+      <Image
         src={data.thumbnailUrl}
         alt={data.thumbnailAlt}
-        className="hover:border-4 border-dotted hover:translate-y-2"
+        layout="responsive"
+        width={16}
+        height={9}
       />
       <h2 className="text-center text-blue-800 font-bold text-2xl">
         {data.title}
@@ -43,10 +46,12 @@ interface ProductListItemProps {
 const ProductListItem = ({ data }: ProductListItemProps) => {
   return (
     <>
-      <img
+      <Image
         src={data.thumbnailUrl}
         alt={data.thumbnailAlt}
-        className="hover:border-4 border-dotted hover:translate-y-2"
+        layout="responsive"
+        width={16}
+        height={9}
       />
       <Link href={`/products/${data.id}`}>
         <a>
