@@ -12,9 +12,10 @@ const ZaisteReactMarkdown = ({ children }: { children: MarkdownResult }) => {
             return <a {...props}></a>;
           }
           return (
-            <Link href={href}>
-              <a {...props}></a>
-            </Link>
+            // <Link href={href}>
+            //   <a {...props} ></a>
+            // </Link>
+            <a {...props} href={href} rel="noopener noreferrer"></a>
           );
         },
       }}
