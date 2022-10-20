@@ -1,5 +1,3 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import Main from "../components/Main";
 import { ProductDetails } from "../components/Product";
 
@@ -21,13 +19,9 @@ const DATA = {
 const Home = () => {
   // console.log({ ...DATA }, DATA);
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-r from-indigo-500 via-purple-200 to-pink-200">
-      <Header />
-      <Main>
-        <ProductDetails data={DATA} />
-      </Main>
-      <Footer />
-    </div>
+    <Main>
+      <ProductDetails data={DATA} />
+    </Main>
   );
 };
 
