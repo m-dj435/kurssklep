@@ -24,19 +24,20 @@ const ProductDetailsHomeFirst = ({ data }: ProductProps) => {
   return (
     <>
       <p>{data.id}</p>
-      <h2>{data.title}</h2>
-      <p>{data.price}</p>
-      <p className="p-4">{data.description}</p>
-      <p>{data.category}</p>
-      <Rating rating={data.rating.rate} />
+      <h2 className="text-red-500 flex justify-center">{data.title}</h2>
+
+      {/* <p className="p-4">{data.description}</p> */}
+      {/* <p>{data.category}</p> */}
+      {/* <Rating rating={data.rating.rate} /> */}
       <Image
         src={data.image}
         layout="responsive"
-        width={16}
+        width={14}
         height={9}
         alt=""
       />
-      <p>{data.longDescription}</p>
+      <p className="flex justify-center">{data.price} zł</p>
+      {/* <p>{data.longDescription}</p> */}
     </>
   );
 };

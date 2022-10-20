@@ -5,10 +5,16 @@ import Image from "next/image";
 interface ProductDetails {
   id: number;
   title: string;
+  price: number;
   description: string;
-  thumbnailUrl: string;
-  thumbnailAlt: string;
-  rating: number;
+  category: string;
+  rating: Rating;
+  image: string;
+  longDescription: string;
+}
+export interface Rating {
+  rate: number;
+  count: number;
 }
 
 interface ProductProps {
@@ -19,25 +25,22 @@ export const ProductDetails = ({ data }: ProductProps) => {
   return (
     <>
       <Image
-        src={data.thumbnailUrl}
-        alt={data.thumbnailAlt}
+        src={data.image}
+        alt=""
         layout="responsive"
-        width={16}
+        width={14}
         height={9}
       />
       <h2 className="text-center text-blue-800 font-bold text-2xl">
         {data.title}
       </h2>
       <p className="p-4">{data.description}</p>
-      <Rating rating={data.rating} />
+      <Rating rating={data.rating.rate} />
     </>
   );
 };
 
-type ProductListItem = Pick<
-  ProductDetails,
-  "title" | "thumbnailUrl" | "thumbnailAlt" | "id"
->;
+type ProductListItem = Pick<ProductDetails, "title" | "image" | "price" | "id">;
 
 interface ProductListItemProps {
   data: ProductListItem;
@@ -46,11 +49,12 @@ interface ProductListItemProps {
 const ProductListItem = ({ data }: ProductListItemProps) => {
   return (
     <>
+      <h3 className="text-red-300">{data.id}</h3>
       <Image
-        src={data.thumbnailUrl}
-        alt={data.thumbnailAlt}
+        src={data.image}
+        alt=""
         layout="responsive"
-        width={16}
+        width={14}
         height={9}
       />
       <Link href={`/products/${data.id}`}>
@@ -60,6 +64,7 @@ const ProductListItem = ({ data }: ProductListItemProps) => {
           </h2>
         </a>
       </Link>
+      <p className="flex justify-center">cena: {data.price} zł</p>
     </>
   );
 };

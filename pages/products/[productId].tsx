@@ -6,7 +6,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { ProductDetails } from "../../components/Product";
+import { ProductDetails, Rating } from "../../components/Product";
 
 const ProductIdPage = ({
   data,
@@ -27,10 +27,12 @@ const ProductIdPage = ({
         data={{
           id: data.id,
           title: data.title,
-          thumbnailUrl: data.image,
-          thumbnailAlt: data.title,
+          image: data.image,
+          price: data.price,
           description: data.description,
-          rating: data.rating.rate,
+          category: data.category,
+          rating,
+          longDescription: data.description,
         }}
       />
     </div>
@@ -48,13 +50,6 @@ export const getStaticPaths = async () => {
         },
       };
     }),
-    // [
-    //   {
-    //     params: {
-    //       productId: "1",
-    //     },
-    //   },
-    // ],
     fallback: false,
   };
 };
@@ -92,10 +87,8 @@ interface StoreApiResponse {
   description: string;
   category: string;
   image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
+  rating: Rating;
+  longDescription: string;
 }
 
 export default ProductIdPage;

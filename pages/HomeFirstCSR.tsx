@@ -72,10 +72,10 @@ const ProductsCsrPage = () => {
 
   return (
     <>
-      <ul className="flex justify-between flex-wrap">
+      <ul className="grid grid-cols sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
         {data.map((product) => {
           return (
-            <li key={product.id} className="shadow-xl border-2 w-1/4 mb-10">
+            <li key={product.id} className="shadow-xl border-2">
               <ProductHomeFirst
                 data={{
                   id: product.id,
