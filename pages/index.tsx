@@ -18,11 +18,7 @@ const DATA = {
 
 const Home = () => {
   // console.log({ ...DATA }, DATA);
-  return (
-    <Main>
-      <ProductDetails data={DATA} />
-    </Main>
-  );
+  return <Main>{/* <ProductDetails data={DATA} /> */}</Main>;
 };
 
 export default Home;

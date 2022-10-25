@@ -4,6 +4,7 @@ import Rating from "./Rating";
 import { NextSeo } from "next-seo";
 import ZaisteReactMarkdown from "./ZaisteReactMarkdown";
 import { MarkdownResult } from "../utils";
+import { useCartState } from "./Cart/CartContext";
 
 interface ProductDetails {
   id: number;
@@ -73,6 +74,7 @@ interface ProductListItemProps {
 }
 
 const ProductListItem = ({ data }: ProductListItemProps) => {
+  const cartState = useCartState();
   return (
     <>
       <div className="bg-white p-6">
@@ -85,13 +87,28 @@ const ProductListItem = ({ data }: ProductListItemProps) => {
           objectFit="contain"
         />
       </div>
-      <Link href={`/products/${data.id}`}>
-        <a>
-          <h2 className="text-center text-black font-medium text-2xl">
-            {data.title}
-          </h2>
-        </a>
-      </Link>
+      <div className="p-4 grid grid-cols-1">
+        <Link href={`/products/${data.id}`}>
+          <a>
+            <h2 className="text-center text-black font-medium text-2xl">
+              {data.title}
+            </h2>
+          </a>
+        </Link>
+        <button
+          onClick={() => {
+            cartState.addItemToCart({
+              id: data.id,
+              price: 21.37,
+              title: data.title,
+              count: 1,
+            });
+          }}
+          className="rounded-full bg-white hover:bg-violet-300 active:bg-violet-500 focus:outline-none focus:ring focus:ring-violet-300 p-2 m-2"
+        >
+          Dodaj do koszyka
+        </button>
+      </div>
     </>
   );
 };

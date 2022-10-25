@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote";
 import { MarkdownResult } from "../utils";
 
