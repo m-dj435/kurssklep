@@ -15,7 +15,7 @@ const Layout = ({ children }: LayoutProps) => {
         <meta name="description" content="Shop Outlet" />
       </Head>
       <Header />
-      <div className="flex-grow">{children}</div>
+      <div className="flex-grow pt-4">{children}</div>
       {/* <Main>
         <ProductDetails data={DATA} />
       </Main> */}

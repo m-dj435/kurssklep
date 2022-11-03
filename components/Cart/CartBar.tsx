@@ -6,7 +6,7 @@ const CartBar = () => {
 
   return (
     <Link href="/cart">
-      <a className="text-white flex">
+      <a className="text-black flex">
         <span className="mr-2">{cartState.totalAmount}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +14,7 @@ const CartBar = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6 text-white"
+          className="w-6 h-6 text-black"
         >
           <path
             strokeLinecap="round"
