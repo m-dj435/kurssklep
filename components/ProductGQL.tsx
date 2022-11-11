@@ -7,7 +7,7 @@ import { MarkdownResult } from "../utils";
 import { useCartState } from "./Cart/CartContext";
 
 interface ProductDetails {
-  id: number;
+  id: string;
   title: string;
   description: string;
   thumbnailUrl: string;
@@ -27,9 +27,9 @@ export const ProductDetails = ({ data }: ProductProps) => {
         <NextSeo
           title={data.title}
           description={data.description}
-          canonical={`https://naszsklep-api.vercel.app/api/products/${data.id}`}
+          canonical={`https://naszsklep-api.vercel.app/api/productsGQL/${data.id}`}
           openGraph={{
-            url: `https://naszsklep-api.vercel.app/api/products/${data.id}`,
+            url: `https://naszsklep-api.vercel.app/api/productsGQL/${data.id}`,
             title: data.title,
             description: data.description,
             images: [
@@ -88,7 +88,7 @@ const ProductListItem = ({ data }: ProductListItemProps) => {
         />
       </div>
       <div className="p-4 grid grid-cols-1">
-        <Link href={`/products/${data.id}`}>
+        <Link href={`/productsGQL/${data.id}`}>
           <a>
             <h2 className="text-center text-black font-medium text-2xl sm:h-14">
               {data.title}

@@ -25,14 +25,17 @@ const Header = () => {
               !showMenu && "msm:hidden"
             } `}
           >
-            <Link href="/aboutPage" passHref>
+            <Link href="/about" passHref>
               <a className="text-gray-500 msm:">About</a>
             </Link>
             <Link href="/" passHref>
               <a className="text-gray-500">Main</a>
             </Link>
-            <Link href="/ProductsPage" passHref>
-              <a className="text-gray-500">Products</a>
+            <Link href="/productsSSG" passHref>
+              <a className="text-gray-500">Products SSG</a>
+            </Link>
+            <Link href="/productsGQL" passHref>
+              <a className="text-gray-500">Products GQL</a>
             </Link>
           </nav>
 

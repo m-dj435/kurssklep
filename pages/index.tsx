@@ -1,24 +1,28 @@
+import { gql, useQuery } from "@apollo/client";
 import Main from "../components/Main";
-import { ProductDetails } from "../components/Product";
-
-const DATA = {
-  title: ``,
-  description: `Aliquam eu consectetur eros. Pellentesque rutrum mauris a nibh
-          dapibus, congue congue magna laoreet. Mauris at suscipit nisl, eget
-          placerat felis. Donec eu tempus risus. Aliquam fringilla condimentum
-          efficitur. Sed pretium sapien sed malesuada placerat. Aenean ac
-          pharetra sapien.aaaa Pellentesque hendrerit tempus urna ac pellentesque.
-          Morbi dapibus aliquet est sed faucibus. Aenean quis nisl nulla. Morbi
-          rutrum enim magna, eget accumsan elit pellentesque ullamcorper.`,
-  thumbnailUrl: `https://picsum.photos/id/1060/536/354`,
-  thumbnailAlt: `Barista z kawą`,
-  rating: 4.5,
-  id: 1,
-};
 
 const Home = () => {
-  // console.log({ ...DATA }, DATA);
-  return <Main>{/* <ProductDetails data={DATA} /> */}</Main>;
+  const { loading, error, data } = useQuery(gql`
+    query GetProductList {
+      products {
+        id
+        name
+        price
+        slug
+      }
+    }
+  `);
+  if (loading) {
+    return <Main>Ładowanie...</Main>;
+  }
+  if (error) {
+    return <Main>{JSON.stringify(error)}</Main>;
+  }
+  return (
+    <Main>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </Main>
+  );
 };
 
 export default Home;
