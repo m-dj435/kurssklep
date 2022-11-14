@@ -11,5 +11,5 @@ module.exports = {
       xl: "1440px",
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
 };
