@@ -170,7 +170,7 @@ const CheckoutForm = () => {
                     className="w-full rounded-lg border-gray-200 p-2.5 text-sm shadow-sm"
                     type="email"
                     id="email"
-                    name="email"
+                    {...register("email")}
                   />
                 </div>
 
