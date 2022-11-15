@@ -1,37 +1,56 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { useForm } from "react-hook-form";
+import { validateMMYY, validatePostalCode } from "../utils";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-interface CheckoutFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  cardNumber: string;
-  cardExpirationDate: string;
-  cardCvc: string;
-  country: string;
-  postalCode: string;
-}
+const schema = yup.object({
+  firstName: yup
+    .string()
+    .min(3, "Imię jest za krótkie")
+    .max(20, "Nazwisko jest za długie")
+    .required(),
+  lastName: yup
+    .string()
+    .min(3, "Nazwisko jest za krótkie")
+    .max(20, "Nazwisko jest za długie")
+    .required(),
+  email: yup.string().email().required("Adres e-maill nie jest poprawny"),
+  phone: yup
+    .string()
+    .length(9, "Polski numer telefonu ma 9 cyfr")
+    .matches(/^[0-9]+$/, "Numer składa się tylko z cyfr")
+    .required(),
+  cardNumber: yup
+    .string()
+    .length(16, "Podaj 16 cyfr")
+    .required("Numer konta jest obowiązkowy"),
+  cardExpirationDate: yup
+    .string()
+    .test("test MMYY", "Sprawdź format miesiąc/rok", validateMMYY)
+    .required(),
+  cardCvc: yup
+    .string()
+    .min(3)
+    .max(4)
+    .matches(/^[0-9]+$/, "Numer składa się tylko z cyfr")
+    .required("Numer wymagany"),
+  country: yup.string().required(),
+  postalCode: yup
+    .string()
+    .test("test postalCode", "Sprawdź kod pocztowy", validatePostalCode)
+    .matches(/\d{2}-\d{3}/, "Zły kod pocztowy")
+    .required(),
+});
+
+type CheckoutFormData = yup.InferType<typeof schema>;
 
 const CheckoutForm = () => {
-  const {
-    register,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CheckoutFormData>();
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const { register, handleSubmit, formState } = useForm<CheckoutFormData>({
+    resolver: yupResolver(schema),
+  });
 
-  // const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-  //   event.preventDefault();
-  //   console.log({ email });
-  // };
-
-  // const [email, setEmail] = useState("");
-
-  // const handleEmailChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-  //   setEmail(e.target.value);
-  // };
+  const onSubmit = (data: CheckoutFormData) => console.log(data);
 
   return (
     <section>
@@ -125,7 +144,10 @@ const CheckoutForm = () => {
 
           <div className=" py-12 md:py-24">
             <div className="mx-auto max-w-lg px-4 lg:px-8">
-              <form onSubmit={onSubmit} className="grid grid-cols-6 gap-4">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="grid grid-cols-6 gap-4"
+              >
                 <div className="col-span-3">
                   <label
                     className="mb-1 block text-sm text-gray-600"
@@ -138,8 +160,14 @@ const CheckoutForm = () => {
                     className="w-full rounded-lg border-gray-200 p-2.5 text-sm shadow-sm"
                     type="text"
                     id="first_name"
-                    name="firstName"
+                    {...register("firstName")}
                   />
+
+                  {formState.errors.firstName && (
+                    <span className="text-red-500">
+                      {formState.errors.firstName.message}
+                    </span>
+                  )}
                 </div>
 
                 <div className="col-span-3">
@@ -154,15 +182,17 @@ const CheckoutForm = () => {
                     className="w-full rounded-lg border-gray-200 p-2.5 text-sm shadow-sm"
                     type="text"
                     id="last_name"
-                    name="lastName"
+                    {...register("lastName", { required: true, minLength: 3 })}
                   />
+                  {formState.errors.lastName && (
+                    <span className="text-red-500">
+                      {formState.errors.lastName.message}
+                    </span>
+                  )}
                 </div>
 
                 <div className="col-span-6">
-                  <label
-                    className="mb-1 block text-sm text-gray-600"
-                    form="email"
-                  >
+                  <label className="mb-1 block text-sm text-gray-600">
                     Email
                   </label>
 
@@ -172,11 +202,16 @@ const CheckoutForm = () => {
                     id="email"
                     {...register("email")}
                   />
+                  {formState.errors.email && (
+                    <span className="text-red-500">
+                      {formState.errors.email.message}
+                    </span>
+                  )}
                 </div>
 
                 <div className="col-span-6">
                   <label
-                    className="mb-1 block text-sm text-gray-600"
+                    className="mb-1 block cardNumbertext-sm text-gray-600"
                     form="phone"
                   >
                     Phone
@@ -186,8 +221,13 @@ const CheckoutForm = () => {
                     className="w-full rounded-lg border-gray-200 p-2.5 text-sm shadow-sm"
                     type="tel"
                     id="phone"
-                    name="phone"
+                    {...register("phone")}
                   />
+                  {formState.errors.phone && (
+                    <span className="text-red-500">
+                      {formState.errors.phone.message}
+                    </span>
+                  )}
                 </div>
 
                 <fieldset className="col-span-6">
@@ -204,10 +244,13 @@ const CheckoutForm = () => {
                       <input
                         className="relative w-full rounded-t-lg border-gray-200 p-2.5 text-sm placeholder-gray-400 focus:z-10"
                         type="text"
-                        name="cardNumber"
+                        {...register("cardNumber")}
                         id="card-number"
                         placeholder="Card number"
                       />
+                      <span className="text-red-500 ml-1">
+                        {formState.errors.cardNumber?.message}
+                      </span>
                     </div>
 
                     <div className="flex -space-x-px">
@@ -219,10 +262,14 @@ const CheckoutForm = () => {
                         <input
                           className="relative w-full rounded-bl-lg border-gray-200 p-2.5 text-sm placeholder-gray-400 focus:z-10"
                           type="text"
-                          name="cardExpirationDate"
+                          {...register("cardExpirationDate")}
                           id="card-expiration-date"
                           placeholder="MM / YY"
                         />
+
+                        <span role="alert" className="text-red-500 ml-1">
+                          {formState.errors.cardExpirationDate?.message}
+                        </span>
                       </div>
 
                       <div className="flex-1">
@@ -233,10 +280,13 @@ const CheckoutForm = () => {
                         <input
                           className="relative w-full rounded-br-lg border-gray-200 p-2.5 text-sm placeholder-gray-400 focus:z-10"
                           type="text"
-                          name="cardCvc"
+                          {...register("cardCvc", { required: true })}
                           id="card-cvc"
                           placeholder="CVC"
                         />
+                        <span role="alert" className="text-red-500 ml-1">
+                          {formState.errors.cardCvc?.message}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -256,15 +306,10 @@ const CheckoutForm = () => {
                       <select
                         className="relative w-full rounded-t-lg border-gray-200 p-2.5 text-sm focus:z-10"
                         id="country"
-                        name="country"
+                        {...register("country", { required: true })}
                         autoComplete="country-name"
                       >
-                        <option>England</option>
-                        <option>Wales</option>
-                        <option>Scotland</option>
-                        <option>France</option>
-                        <option>Belgium</option>
-                        <option>Japan</option>
+                        <option>Poland</option>
                       </select>
                     </div>
 
@@ -276,11 +321,14 @@ const CheckoutForm = () => {
                       <input
                         className="relative w-full rounded-b-lg border-gray-200 p-2.5 text-sm placeholder-gray-400 focus:z-10"
                         type="text"
-                        name="postalCode"
+                        {...register("postalCode", { required: true })}
                         id="postal-code"
                         autoComplete="postal-code"
-                        placeholder="ZIP/Post Code"
+                        placeholder="00-000"
                       />
+                      <span role="alert" className="text-red-500 ml-1">
+                        {formState.errors.postalCode?.message}
+                      </span>
                     </div>
                   </div>
                 </fieldset>
