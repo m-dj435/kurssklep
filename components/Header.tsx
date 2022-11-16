@@ -37,6 +37,9 @@ const Header = () => {
             <Link href="/productsGQL" passHref>
               <a className="text-gray-500">Products GQL</a>
             </Link>
+            <Link href="/checkout" passHref>
+              <a className="text-red-500">Formularz</a>
+            </Link>
           </nav>
 
           {!showMenu && <CartBar />}

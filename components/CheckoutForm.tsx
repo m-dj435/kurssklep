@@ -1,10 +1,11 @@
 import React, { ReactNode, useState } from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { validateMMYY, validatePostalCode } from "../utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { FormInput, FormInputSelect } from "./FormInput";
 
-const schema = yup.object({
+export const schema = yup.object({
   firstName: yup
     .string()
     .min(3, "Imię jest za krótkie")
@@ -31,10 +32,10 @@ const schema = yup.object({
     .required(),
   cardCvc: yup
     .string()
-    .min(3)
-    .max(4)
+    .min(3, "Numer wymagany")
+    .max(4, "Numer wymagany")
     .matches(/^[0-9]+$/, "Numer składa się tylko z cyfr")
-    .required("Numer wymagany"),
+    .required(),
   country: yup.string().required(),
   postalCode: yup
     .string()
@@ -43,10 +44,10 @@ const schema = yup.object({
     .required(),
 });
 
-type CheckoutFormData = yup.InferType<typeof schema>;
+export type CheckoutFormData = yup.InferType<typeof schema>;
 
 const CheckoutForm = () => {
-  const { register, handleSubmit, formState } = useForm<CheckoutFormData>({
+  const methods = useForm<CheckoutFormData>({
     resolver: yupResolver(schema),
   });
 
@@ -144,204 +145,74 @@ const CheckoutForm = () => {
 
           <div className=" py-12 md:py-24">
             <div className="mx-auto max-w-lg px-4 lg:px-8">
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="grid grid-cols-6 gap-4"
-              >
-                <div className="col-span-3">
-                  <label
-                    className="mb-1 block text-sm text-gray-600"
-                    form="first_name"
-                  >
-                    First Name
-                  </label>
+              <FormProvider {...methods}>
+                <form
+                  onSubmit={methods.handleSubmit(onSubmit)}
+                  className="grid grid-cols-6 gap-4"
+                >
+                  <div className="col-span-3 h-24">
+                    <FormInput name="firstName" label="First Name" />
+                  </div>
+                  <div className="col-span-3 h-24">
+                    <FormInput name="lastName" label="Last Name" />
+                  </div>
+                  <div className="col-span-6 h-24">
+                    <FormInput name="email" label="Email" />
+                  </div>
+                  <div className="col-span-6 h-24">
+                    <FormInput name="phone" label="Phone" />
+                  </div>
+                  <fieldset className="col-span-6">
+                    <legend className="mb-1 block text-sm text-gray-600 text-center">
+                      Card Details
+                    </legend>
 
-                  <input
-                    className="w-full rounded-lg border-gray-200 p-2.5 text-sm shadow-sm"
-                    type="text"
-                    id="first_name"
-                    {...register("firstName")}
-                  />
-
-                  {formState.errors.firstName && (
-                    <span className="text-red-500">
-                      {formState.errors.firstName.message}
-                    </span>
-                  )}
-                </div>
-
-                <div className="col-span-3">
-                  <label
-                    className="mb-1 block text-sm text-gray-600"
-                    form="last_name"
-                  >
-                    Last Name
-                  </label>
-
-                  <input
-                    className="w-full rounded-lg border-gray-200 p-2.5 text-sm shadow-sm"
-                    type="text"
-                    id="last_name"
-                    {...register("lastName", { required: true, minLength: 3 })}
-                  />
-                  {formState.errors.lastName && (
-                    <span className="text-red-500">
-                      {formState.errors.lastName.message}
-                    </span>
-                  )}
-                </div>
-
-                <div className="col-span-6">
-                  <label className="mb-1 block text-sm text-gray-600">
-                    Email
-                  </label>
-
-                  <input
-                    className="w-full rounded-lg border-gray-200 p-2.5 text-sm shadow-sm"
-                    type="email"
-                    id="email"
-                    {...register("email")}
-                  />
-                  {formState.errors.email && (
-                    <span className="text-red-500">
-                      {formState.errors.email.message}
-                    </span>
-                  )}
-                </div>
-
-                <div className="col-span-6">
-                  <label
-                    className="mb-1 block cardNumbertext-sm text-gray-600"
-                    form="phone"
-                  >
-                    Phone
-                  </label>
-
-                  <input
-                    className="w-full rounded-lg border-gray-200 p-2.5 text-sm shadow-sm"
-                    type="tel"
-                    id="phone"
-                    {...register("phone")}
-                  />
-                  {formState.errors.phone && (
-                    <span className="text-red-500">
-                      {formState.errors.phone.message}
-                    </span>
-                  )}
-                </div>
-
-                <fieldset className="col-span-6">
-                  <legend className="mb-1 block text-sm text-gray-600">
-                    Card Details
-                  </legend>
-
-                  <div className="-space-y-px rounded-lg bg-white shadow-sm">
-                    <div>
-                      <label className="sr-only" form="card-number">
-                        Card Number
-                      </label>
-
-                      <input
-                        className="relative w-full rounded-t-lg border-gray-200 p-2.5 text-sm placeholder-gray-400 focus:z-10"
-                        type="text"
-                        {...register("cardNumber")}
-                        id="card-number"
-                        placeholder="Card number"
-                      />
-                      <span className="text-red-500 ml-1">
-                        {formState.errors.cardNumber?.message}
-                      </span>
-                    </div>
-
-                    <div className="flex -space-x-px">
-                      <div className="flex-1">
-                        <label className="sr-only" form="card-expiration-date">
-                          Expiration Date
-                        </label>
-
-                        <input
-                          className="relative w-full rounded-bl-lg border-gray-200 p-2.5 text-sm placeholder-gray-400 focus:z-10"
-                          type="text"
-                          {...register("cardExpirationDate")}
-                          id="card-expiration-date"
-                          placeholder="MM / YY"
-                        />
-
-                        <span role="alert" className="text-red-500 ml-1">
-                          {formState.errors.cardExpirationDate?.message}
-                        </span>
+                    <div className="-space-y-px rounded-lg shadow-sm">
+                      <div>
+                        <FormInput name="cardNumber" label="Card Number" />
                       </div>
 
-                      <div className="flex-1">
-                        <label className="sr-only" form="card-cvc">
-                          CVC
-                        </label>
+                      <div className="flex -space-x-px">
+                        <div className="flex-1 h-24">
+                          <FormInput
+                            name="cardExpirationDate"
+                            label="Expiration Date"
+                          />
+                        </div>
 
-                        <input
-                          className="relative w-full rounded-br-lg border-gray-200 p-2.5 text-sm placeholder-gray-400 focus:z-10"
-                          type="text"
-                          {...register("cardCvc", { required: true })}
-                          id="card-cvc"
-                          placeholder="CVC"
-                        />
-                        <span role="alert" className="text-red-500 ml-1">
-                          {formState.errors.cardCvc?.message}
-                        </span>
+                        <div className="flex-1 h-24">
+                          <FormInput name="cardCvc" label="CVC" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </fieldset>
+                  </fieldset>
 
-                <fieldset className="col-span-6">
-                  <legend className="mb-1 block text-sm text-gray-600">
-                    Billing Address
-                  </legend>
+                  <fieldset className="col-span-6">
+                    <legend className="mb-1 block text-sm text-gray-600 text-center">
+                      Billing Address
+                    </legend>
 
-                  <div className="-space-y-px rounded-lg bg-white shadow-sm">
-                    <div>
-                      <label className="sr-only" form="country">
-                        Country
-                      </label>
+                    <div className="-space-y-px rounded-lg shadow-sm">
+                      <div>
+                        <FormInputSelect name="country" label="Country" />
+                      </div>
 
-                      <select
-                        className="relative w-full rounded-t-lg border-gray-200 p-2.5 text-sm focus:z-10"
-                        id="country"
-                        {...register("country", { required: true })}
-                        autoComplete="country-name"
-                      >
-                        <option>Poland</option>
-                      </select>
+                      <div className="h-24">
+                        <FormInput name="postalCode" label="ZIP/Post Code" />
+                      </div>
                     </div>
+                  </fieldset>
 
-                    <div>
-                      <label className="sr-only" form="postal-code">
-                        ZIP/Post Code
-                      </label>
-
-                      <input
-                        className="relative w-full rounded-b-lg border-gray-200 p-2.5 text-sm placeholder-gray-400 focus:z-10"
-                        type="text"
-                        {...register("postalCode", { required: true })}
-                        id="postal-code"
-                        autoComplete="postal-code"
-                        placeholder="00-000"
-                      />
-                      <span role="alert" className="text-red-500 ml-1">
-                        {formState.errors.postalCode?.message}
-                      </span>
-                    </div>
+                  <div className="col-span-6">
+                    <button
+                      className="block w-full rounded-lg bg-white p-2.5 text-sm "
+                      type="submit"
+                    >
+                      Pay Now
+                    </button>
                   </div>
-                </fieldset>
-
-                <div className="col-span-6">
-                  <button
-                    className="block w-full rounded-lg bg-white p-2.5 text-sm "
-                    type="submit"
-                  >
-                    Pay Now
-                  </button>
-                </div>
-              </form>
+                </form>
+              </FormProvider>
             </div>
           </div>
         </div>
