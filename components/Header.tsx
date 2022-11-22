@@ -31,7 +31,7 @@ const Header = () => {
             <Link href="/" passHref>
               <a className="text-gray-500">Main</a>
             </Link>
-            <Link href="/productsSSG" passHref>
+            <Link href="/productsSSG/page/1" passHref>
               <a className="text-gray-500">Products SSG</a>
             </Link>
             <Link href="/productsGQL" passHref>

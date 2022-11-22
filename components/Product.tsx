@@ -75,6 +75,7 @@ interface ProductListItemProps {
 
 const ProductListItem = ({ data }: ProductListItemProps) => {
   const cartState = useCartState();
+
   return (
     <>
       <div className="bg-white p-6">
@@ -88,7 +89,7 @@ const ProductListItem = ({ data }: ProductListItemProps) => {
         />
       </div>
       <div className="p-4 grid grid-cols-1">
-        <Link href={`/products/${data.id}`}>
+        <Link href={`/productsSSG/page/product/${data.id}`}>
           <a>
             <h2 className="text-center text-black font-medium text-2xl sm:h-14">
               {data.title}
