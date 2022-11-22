@@ -65,7 +65,6 @@ export const getStaticProps = async ({
   const productsOnPage = 25;
   const offsetAtPage = Number(params?.page) * productsOnPage - productsOnPage;
 
-  console.log(offset, offsetAtPage);
   const res = await fetch(
     `https://naszsklep-api.vercel.app/api/products?take=${productsOnPage}&offset=${offsetAtPage}`
   );
