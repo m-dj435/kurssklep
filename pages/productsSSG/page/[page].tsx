@@ -5,7 +5,6 @@ import ProductListItem from "../../../components/Product";
 const ProductsPage = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  console.log(data);
   return (
     <>
       <ul className="grid grid-cols sm:grid-cols-2 md:grid-cols-3 gap-4">
