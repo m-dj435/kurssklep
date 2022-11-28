@@ -27,3 +27,19 @@ query GetProductSlugs {
     slug
   }
 }
+
+fragment reviewContent on Review {
+  content
+  headline
+  id
+  name
+  rating
+}
+
+query GetReviewForProductSlug($slug: String!) {
+  product(where: { slug: $slug }) {
+    reviews {
+      ...reviewContent
+    }
+  }
+}

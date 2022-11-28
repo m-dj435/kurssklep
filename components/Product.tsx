@@ -78,7 +78,7 @@ const ProductListItem = ({ data }: ProductListItemProps) => {
 
   return (
     <>
-      <div className="bg-white p-6">
+      <div className="bg-white p-6 shadow-lg">
         <Image
           src={data.thumbnailUrl}
           alt={data.thumbnailAlt}

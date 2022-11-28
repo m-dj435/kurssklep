@@ -5,6 +5,7 @@ import { NextSeo } from "next-seo";
 import ZaisteReactMarkdown from "./ZaisteReactMarkdown";
 import { MarkdownResult } from "../utils";
 import { useCartState } from "./Cart/CartContext";
+import { ProductReviewContainer } from "./ProductReview/ProductReviewContainer";
 
 interface ProductDetails {
   id: string;
@@ -14,6 +15,7 @@ interface ProductDetails {
   thumbnailAlt: string;
   rating: number;
   longDescription: MarkdownResult;
+  slug: string;
 }
 
 interface ProductProps {
@@ -60,6 +62,7 @@ export const ProductDetails = ({ data }: ProductProps) => {
         <ZaisteReactMarkdown>{data.longDescription}</ZaisteReactMarkdown>
       </article>
       <Rating rating={data.rating} />
+      <ProductReviewContainer productSlug={data.slug} />
     </>
   );
 };

@@ -42,6 +42,7 @@ const ProductSlugPage = ({
           description: data.description,
           rating: 4,
           longDescription: data.longDescription,
+          slug: data.slug,
         }}
       />
     </div>

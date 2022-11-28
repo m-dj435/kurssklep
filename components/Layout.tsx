@@ -9,7 +9,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-r from-white via-purple-200 to-gray-200">
+    <div className="flex flex-col min-h-screen bg-gradient-to-r from-white via-zinc-300 to-gray-200">
       <Head>
         <title> SHOP-MDJ </title>
         <meta name="description" content="Shop Outlet" />

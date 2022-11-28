@@ -1,4 +1,5 @@
 import Main from "../components/Main";
+import { NewsletterForm } from "../components/NewsletterForm";
 import {
   CreateProductReviewDocument,
   useCreateProductReviewMutation,
@@ -23,20 +24,24 @@ const Home = () => {
   };
 
   return (
-    <Main>
-      <button
-        onClick={addReview}
-        type="button"
-        className="group relative inline-block focus:outline-none focus:ring"
-      >
-        <span className="relative inset-0 translate-x-1.5 translate-y-1.5 bg-violet-300 transition-transform group-hover:translate-y-0 group-hover:translate-x-0 inline-block border-2 border-current  text-sm font-bold uppercase tracking-widest text-black group-active:text-opacity-75">
-          Dodaj komentarz
-        </span>
-      </button>
-      {loading && <div>Ładowanie...</div>}
-      {error && <pre>{JSON.stringify(error, null, 2)}</pre>}
-      {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
-    </Main>
+    <>
+      <Main>
+        <button
+          onClick={addReview}
+          type="button"
+          className="group relative inline-block focus:outline-none focus:ring"
+        >
+          <span className="relative inset-0 translate-x-1.5 translate-y-1.5 bg-violet-300 transition-transform group-hover:translate-y-0 group-hover:translate-x-0 inline-block border-2 border-current  text-sm font-bold uppercase tracking-widest text-black group-active:text-opacity-75">
+            Dodaj komentarz
+          </span>
+        </button>
+
+        {loading && <div>Ładowanie...</div>}
+        {error && <pre>{JSON.stringify(error, null, 2)}</pre>}
+        {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+      </Main>
+      <NewsletterForm />
+    </>
   );
 };
 
