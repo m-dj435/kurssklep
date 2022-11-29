@@ -5,6 +5,7 @@ import { NextSeo } from "next-seo";
 import ZaisteReactMarkdown from "./ZaisteReactMarkdown";
 import { MarkdownResult } from "../utils";
 import { useCartState } from "./Cart/CartContext";
+import { useRouter } from "next/router";
 
 interface ProductDetails {
   id: number;

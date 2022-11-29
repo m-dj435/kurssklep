@@ -1,8 +1,37 @@
 import React from "react";
 import { useCartState } from "../components/Cart/CartContext";
+import { loadStripe } from "@stripe/stripe-js";
+import { Stripe } from "stripe";
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
 const CartContent = () => {
   const cartState = useCartState();
+
+  const pay = async () => {
+    const stripe = await stripePromise;
+    if (!stripe) {
+      throw new Error(`Something went wrong`);
+    }
+    const res = await fetch("/api/checkout/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(
+        cartState.items.map((cartItem) => {
+          return {
+            slug: cartItem.id,
+            count: cartItem.count,
+          };
+        })
+      ),
+    });
+    const { session }: { session: Stripe.Response<Stripe.Checkout.Session> } =
+      await res.json();
+
+    await stripe.redirectToCheckout({ sessionId: session.id });
+  };
   return (
     <div className="col-span-2">
       <ul className="divide-y divide-gray-600">
@@ -40,6 +69,13 @@ const CartContent = () => {
           </li>
         ))}
       </ul>
+      <button
+        onClick={pay}
+        type="button"
+        className="block w-full rounded-lg bg-blue-300 p-2.5 text-sm "
+      >
+        Złóż zamówienie
+      </button>
     </div>
   );
 };
